@@ -42,8 +42,8 @@ function reload($phone, $code)
 	<?
 	
 	$url = constant('api')."?method=runLottery&msisdn=$phone&code=$code";// 
-/*===DEBUG===*/	if ($code == 'test') $url = 'fake.php';
-	if ($code == 'trick') $url = 'data.txt';
+/*===DEBUG===*/	if ($code == 'test') $url = './FILES/fake.php';
+	if ($code == 'trick') $url = './FILES/data.txt';
 	$json = file_get_contents($url);
 	$d = json_decode($json, true);
 	
@@ -111,7 +111,7 @@ function delete_cookies() {
 
 <!--CSS -->
 <style type="text/css">
-body { background: url("./bg.jpg"); text-align:center; color:white;}
+body { background: url("./FILES/bg.jpg"); text-align:center; color:white;}
 h1 { color:red; text-align:center; }
 h2 { color:#0066CC; text-align:center; }
 
