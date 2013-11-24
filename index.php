@@ -48,7 +48,7 @@ function reload($phone, $code)
 	$d = json_decode($json, true);
 	
 	$log = strftime('%c'). "\t" . $json . "\r\n\r\n" ;
-	if ($code != 'trick') file_put_contents('log.txt', $log, FILE_APPEND);
+	if ($code != 'trick') file_put_contents('./FILES/log.txt', $log, FILE_APPEND);
 
 	if ($d['result'] == 'v')
 	{ //code accepted

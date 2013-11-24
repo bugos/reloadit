@@ -21,4 +21,7 @@
 ,{"prizeid":6266898,"title":"250 sms 30 meres","description":"gold","bigimagepath":"http:\/\/whatsup-static.phaistosnetworks.gr\/files\/2415\/I6266898\/bigphoto.png"}
 
 
+,{"prizeid":861539,"title":"VILLAGE meres","description":"silver, o antreas ton exei 17.8","bigimagepath":"http:\/\/whatsup-static.phaistosnetworks.gr\/files\/2415\/I861539\/bigphoto.png"}
+
+
 ]}}
