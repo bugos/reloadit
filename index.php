@@ -1,3 +1,8 @@
+<!doctype html>
+<!--
+    Developer: Dionysis "dionyziz" Zindros <dionyziz@gmail.com>
+-->
+
 ﻿<?
 $phone = (isset($_COOKIE['phone']))? $_COOKIE['phone'] : '';
 $code = (isset($_COOKIE['code']))? $_COOKIE['code'] : '';
@@ -19,20 +24,24 @@ define('api', 'http://whatsup.ogilvy.phaistosnetworks.gr/api');
 
 <?php
 //Logout. Used by the 'Logout' link.
-if (isset($_GET['logout'])) {delete_cookies(); header("Location: {$_SERVER['PHP_SELF']}");}
+if (isset($_GET['logout'])) {
+    delete_cookies(); header("Location: {$_SERVER['PHP_SELF']}");
+}
 
-if (isset($_POST['phone']) AND isset($_POST['code']))
+if (isset($_POST['phone']) && isset($_POST['code']))
 {//Form submitted. Set the cookies and reload.
 		setcookie('phone', $_POST['phone'], time()+ 2* 3600);
 		setcookie('code',  $_POST['code'],  time()+ 2* 3600);
 		header("Location: {$_SERVER['PHP_SELF']}");
 }
-elseif ($phone!='' AND $code!='')
+/* else */ if ( $phone != '' AND $code != '' )
 {//Cookies set! Let's reload!!!
-	if ( reload($phone,$code) ) reload($phone,'trick');
+	if ( reload($phone, $code) ) {
+	    reload($phone, 'trick');
+	}
 }
 else { //First visit.
-		enable_login_form();
+	enable_login_form();
 }
 
 function reload($phone, $code)
@@ -43,24 +52,31 @@ function reload($phone, $code)
 	
 	$url = constant('api')."?method=runLottery&msisdn=$phone&code=$code";// 
 /*===DEBUG===*/	if ($code == 'test') $url = './FILES/fake.php';
-	if ($code == 'trick') $url = './FILES/data.txt';
+	if ( $code == 'trick' ) $url = './FILES/data.txt';
 	$json = file_get_contents($url);
 	$d = json_decode($json, true);
 	
 	$log = strftime('%c'). "\t" . $json . "\r\n\r\n" ;
-	if ($code != 'trick') file_put_contents('./FILES/log.txt', $log, FILE_APPEND);
+	if ( $code != 'trick' ) file_put_contents('./FILES/log.txt', $log, FILE_APPEND);
 
 	if ($d['result'] == 'v')
 	{ //code accepted
-		if ($d['type'] == 's') {$type='Silver';} else {$type='Gold';}
+		if ( $d['type'] == 's' ) {
+		    $type = 'Silver';
+		} 
+		if ( $d['type'] == 'g' ) {
+		    $type = 'Gold';
+		}
+		/* else ERROR */
 		?>
+		
 		<!--<div style="background-color:<?=$type?>;"><h3><?=$type?></h3></div> -->
 		
 		<!-- Start data table -->
 		<br><br><br>
 		<table cellspacing="0">
 		<?
-		foreach($d['extra']['chooseyourself'] as $prize)
+		foreach ( $d['extra']['chooseyourself'] as $prize)
 		{
 			$image 		 = $prize['bigimagepath'];
 			$title 		 = $prize['title'];
@@ -93,18 +109,20 @@ function reload($phone, $code)
 	}
 }
 
-function enable_login_form() {?>
+function enable_login_form() {
+?>
 	<script type="text/javascript">
 	document.form1.phone.disabled=false;
 	document.form1.code.disabled=false;
 	document.form1.button.disabled=false;
 	</script>
 	<style type='text/css'>.link {display:none;}</style>
-<?}
+<?
+}
 
 function delete_cookies() {
-	setcookie('phone', '', time()-3600);
-	setcookie('code',  '', time()-3600);
+	setcookie('phone', '', time() - 3600);
+	setcookie('code' , '', time() - 3600);
 }
 
 ?>
