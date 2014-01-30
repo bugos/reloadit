@@ -13,10 +13,10 @@ $code  = (isset($_COOKIE['code'])) ? $_COOKIE['code']  : '';
 <img src="http://www.whatsup.gr/reloadit/app/media/images/logo.png"/>
 <!-- Start of main form --> 
 <div style="background-color:grey; border:1px solid black; border-radius:5px; padding: 5px 5px 0px 10px; float:right; "> 
-	<!-- This form is disabled by default. enable_login_form() is used to enable it when needed-->
 	<form name="form1" method="POST">
+	<? //This form is disabled by default. enable_login_form() is used to enable it when needed ?>
 		Phone:<input name="phone" value="<?=$phone?>" disabled />
-		Code: <input name="code" value="<?=$code?>" disabled />
+		Code: <input name="code"  value="<?=$code?>"  disabled />
 		<input type="submit" name="button" value="Go!" disabled />
 		<a class="link" href="?logout=1"> Logout!</a>
 	</form>
@@ -24,13 +24,13 @@ $code  = (isset($_COOKIE['code'])) ? $_COOKIE['code']  : '';
 <!--End of main form -->
 
 <?php
-
 //Logout. Used by the 'Logout' link.
 if ( isset($_GET['logout']) ) {
     delete_cookies();
     header("Location: {$_SERVER['PHP_SELF']}");
 }
 
+/* */
 if ( isset($_POST['phone']) && isset($_POST['code']) )
 {//Form submitted. Set the cookies and reload.
 		setcookie('phone', $_POST['phone'], time()+ 2* 3600);
