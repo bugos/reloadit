@@ -1,12 +1,13 @@
 <!doctype html>
 <!--
-    Developer: Dionysis "dionyziz" Zindros <dionyziz@gmail.com>
+    Developer: Evangelos "bugos" Mamalakis <mamalakis@auth.gr>
 -->
 
-﻿<?
+<?php
+define('api', 'http://whatsup.ogilvy.phaistosnetworks.gr/api');
+
 $phone = (isset($_COOKIE['phone']))? $_COOKIE['phone'] : '';
 $code = (isset($_COOKIE['code']))? $_COOKIE['code'] : '';
-define('api', 'http://whatsup.ogilvy.phaistosnetworks.gr/api');
 ?>
 
 <img src="http://www.whatsup.gr/reloadit/app/media/images/logo.png"/>
@@ -23,18 +24,20 @@ define('api', 'http://whatsup.ogilvy.phaistosnetworks.gr/api');
 <!--End of main form -->
 
 <?php
+
 //Logout. Used by the 'Logout' link.
-if (isset($_GET['logout'])) {
-    delete_cookies(); header("Location: {$_SERVER['PHP_SELF']}");
+if ( isset($_GET['logout']) ) {
+    delete_cookies();
+    header("Location: {$_SERVER['PHP_SELF']}");
 }
 
-if (isset($_POST['phone']) && isset($_POST['code']))
+if ( isset($_POST['phone']) && isset($_POST['code']) )
 {//Form submitted. Set the cookies and reload.
 		setcookie('phone', $_POST['phone'], time()+ 2* 3600);
 		setcookie('code',  $_POST['code'],  time()+ 2* 3600);
 		header("Location: {$_SERVER['PHP_SELF']}");
 }
-/* else */ if ( $phone != '' AND $code != '' )
+elseif ( $phone != '' AND $code != '' )
 {//Cookies set! Let's reload!!!
 	if ( reload($phone, $code) ) {
 	    reload($phone, 'trick');
@@ -56,9 +59,11 @@ function reload($phone, $code)
 	$json = file_get_contents($url);
 	$d = json_decode($json, true);
 	
-	$log = strftime('%c'). "\t" . $json . "\r\n\r\n" ;
-	if ( $code != 'trick' ) file_put_contents('./FILES/log.txt', $log, FILE_APPEND);
-
+	//Logging
+	if ( $code != 'trick' ) {
+		$log = strftime('%c'). "\t" . $json . "\r\n\r\n" ;
+		file_put_contents('./FILES/log.txt', $log, FILE_APPEND);
+	}
 	if ($d['result'] == 'v')
 	{ //code accepted
 		if ( $d['type'] == 's' ) {
@@ -96,7 +101,7 @@ function reload($phone, $code)
 		<!-- End data table -->
 		<?
 		/*===DEBUG===*/	echo "<!--<br><div style=\"background-color:grey\">$json </div> -->"; //Debug!
-		return 1;
+		return True; //Everything went well
 	}
 	else
 	{//Server returned an Error!
