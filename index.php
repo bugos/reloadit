@@ -7,7 +7,7 @@
 define('api', 'http://whatsup.ogilvy.phaistosnetworks.gr/api');
 
 $phone = (isset($_COOKIE['phone']))? $_COOKIE['phone'] : '';
-$code = (isset($_COOKIE['code']))? $_COOKIE['code'] : '';
+$code  = (isset($_COOKIE['code'])) ? $_COOKIE['code']  : '';
 ?>
 
 <img src="http://www.whatsup.gr/reloadit/app/media/images/logo.png"/>
@@ -73,8 +73,8 @@ function reload($phone, $code)
 		    $type = 'Gold';
 		}
 		/* else ERROR */
-		?>
 		
+		?>
 		<!--<div style="background-color:<?=$type?>;"><h3><?=$type?></h3></div> -->
 		
 		<!-- Start data table -->
